@@ -44,3 +44,43 @@ The dashboard uses Loki `pattern` parser:
   - `<mon> <day> <ts> <host> <pid> (<component>) <tag> <file> <line> <level> <msg>`
 
 If log format varies slightly, update these pattern strings in the relevant panel query.
+
+---
+
+## KiteConnect strategy lab (Python)
+
+Added `kite_algo_lab.py` to help you test multiple stock-entry/exit logics (including 20 DMA) for about a week and compare which strategy looks best.
+
+### Install dependencies
+
+```bash
+pip install kiteconnect pandas numpy
+```
+
+### Configure script
+
+Open `kite_algo_lab.py` and set:
+
+- `API_KEY`
+- `ACCESS_TOKEN`
+- `INSTRUMENT_TOKEN` (stock token from Kite instruments list)
+- `INTERVAL` and `LOOKBACK_DAYS`
+
+### Run
+
+```bash
+python kite_algo_lab.py
+```
+
+The script evaluates:
+
+- 20 DMA breakout with RSI + volume confirmation
+- 9/21 EMA crossover
+- Pullback mean-reversion above 20 DMA
+
+Outputs:
+
+- `strategy_stats.csv` (ranking of strategies)
+- `strategy_trades.csv` (generated entries/exits)
+
+You can run for one week, compare results, then tweak stop-loss/target and entry filters for the best candidate.
